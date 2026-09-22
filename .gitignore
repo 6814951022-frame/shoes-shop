@@ -8,5 +8,5 @@ dist/
 .vercel/
 
 # Uploaded media; retain directory placeholders only
-uploads/*/*
-!uploads/**/.gitkeep
+**/uploads/*/*
+!**/uploads/**/.gitkeep

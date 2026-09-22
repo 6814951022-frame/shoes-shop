@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 const cors = require("cors");
 const trackRoutes = require("./routes/track.routes");
 const authRoutes = require("./routes/auth.routes");
@@ -13,7 +12,6 @@ const app = express();
 // 1. Global middleware
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // 2. Routes
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
