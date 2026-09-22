@@ -1,0 +1,12 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local configuration and Vercel metadata
+.env
+.env.*.local
+.vercel/
+
+# Uploaded media; retain directory placeholders only
+uploads/*/*
+!uploads/**/.gitkeep
