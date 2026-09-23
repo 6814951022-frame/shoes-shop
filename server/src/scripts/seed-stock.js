@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const Product = require("../models/Product.model");
 
-const defaultSizes = [40, 41, 42, 43, 44].map((size) => ({ size, stock: 5 }));
+const defaultSizes = [7, 8, 9, 10, 11].map((size) => ({ size, stock: 5 }));
 
 async function seedStock() {
   if (!process.env.MONGO_URI) throw new Error("Set MONGO_URI before seeding stock");
