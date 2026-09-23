@@ -1,4 +1,4 @@
-const API_URL = localStorage.getItem("apiUrl") || "http://localhost:5000/api";
+const API_URL = localStorage.getItem("apiUrl") || (window.location.hostname === "localhost" ? "http://localhost:5000/api" : "/api");
 const statusElement = document.querySelector("#status");
 const authArea = document.querySelector("#auth-area");
 const profile = document.querySelector("#profile");

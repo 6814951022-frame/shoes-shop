@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProductManager from "./ProductManagerWithUpload";
 import ProductFlagsManager from "./ProductFlagsManager";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000/api" : "/api");
 const emptyRegister = { name: "", email: "", password: "", phone: "", address: "" };
 
 export default function AuthModal({ onClose }) {
