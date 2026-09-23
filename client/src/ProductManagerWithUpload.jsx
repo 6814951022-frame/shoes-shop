@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-const SERVER_URL = API_URL.replace(/\/api$/, "");
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000/api" : "/api");
 const blank = { name: "", brand: "", sku: "", category: "casual", price: "", color: "", sizes: "", imageUrl: "" };
 
 export default function ProductManagerWithUpload() {
@@ -10,7 +9,7 @@ export default function ProductManagerWithUpload() {
   const load = async () => { try { setProducts(await request("/products?status=available")); } catch (error) { setMessage(error.message); } };
   useEffect(() => { load(); }, []);
   const set = (key) => (event) => setForm({ ...form, [key]: event.target.value });
-  const uploadImage = async () => { if (!imageFile) return form.imageUrl; const data = new FormData(); data.append("image", imageFile); const result = await request("/uploads/products", { method: "POST", body: data }); return `${SERVER_URL}${result.imageUrl}`; };
+  const uploadImage = async () => { if (!imageFile) return form.imageUrl; const data = new FormData(); data.append("image", imageFile); const result = await request("/uploads/products", { method: "POST", body: data }); return result.imageUrl; };
   const submit = async (event) => { event.preventDefault(); try { const imageUrl = await uploadImage(); const sizes = form.sizes.split(",").filter(Boolean).map((value) => { const [size, stock] = value.trim().split(":"); return { size: Number(size), stock: Number(stock || 0) }; }); const payload = { ...form, price: Number(form.price), sizes, images: imageUrl ? [imageUrl] : [] }; delete payload.imageUrl; await request(id ? `/products/${id}` : "/products", { method: id ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }); setMessage(id ? "Product updated" : "Product added"); setForm(blank); setImageFile(null); setId(null); load(); } catch (error) { setMessage(error.message); } };
   const edit = (product) => { setId(product._id); setImageFile(null); setForm({ name: product.name, brand: product.brand, sku: product.sku, category: product.category, price: product.price, color: product.color || "", sizes: product.sizes?.map((size) => `${size.size}:${size.stock}`).join(", ") || "", imageUrl: product.images?.[0] || "" }); };
   const remove = async (productId) => { if (!window.confirm("Delete this product?")) return; try { await request(`/products/${productId}`, { method: "DELETE" }); setMessage("Product deleted"); load(); } catch (error) { setMessage(error.message); } };

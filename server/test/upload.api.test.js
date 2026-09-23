@@ -6,6 +6,7 @@ const blob = require("@vercel/blob");
 const app = require("../src/app");
 
 const token = jwt.sign({ id: "507f1f77bcf86cd799439011", role: "admin" }, process.env.JWT_SECRET || "development-secret-change-me");
+process.env.BLOB_READ_WRITE_TOKEN ||= "test-blob-token";
 
 test("admin can upload a product image", async (t) => {
   t.mock.method(blob, "put", async (pathname, body, options) => {

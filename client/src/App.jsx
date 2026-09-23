@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import ProductManager from "./ProductManager";
+import ProductManager from "./ProductManagerWithUpload";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000/api" : "/api");
 const initialRegister = { name: "", email: "", password: "", phone: "", address: "" };
 const initialLogin = { email: "", password: "" };
 

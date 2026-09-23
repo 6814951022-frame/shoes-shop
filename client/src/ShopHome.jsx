@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AuthModal from "./AuthModal";
 import CartDrawer from "./CartDrawer";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000/api" : "/api");
 const money = new Intl.NumberFormat("th-TH", { style: "currency", currency: "THB", maximumFractionDigits: 0 });
 const imageSource = (image) => !image || image.startsWith("http") ? image : `${API_URL.replace(/\/api$/, "")}${image}`;
 
